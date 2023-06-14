@@ -19,3 +19,10 @@ bcrypt.genSalt(saltRounds, function(err, salt) {
   });
 });
 ```
+
+# To Make Password Hashes Unique
+
+>Salting is also important when two or more users have the same passwords. Adding different randomized salts to each password helps to make each unique. For example, if your password is iL0veCh3ese! and another user, Chioma, has that exact password, salting is used to make those password hashes unique.
+
+
+![Alt text](image.png)
