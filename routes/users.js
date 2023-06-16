@@ -2,6 +2,7 @@ const express =require('express')
 const router=express.Router();
 const User=require('../model/User');
 const bcrypt=require('bcryptjs');
+const passport = require('passport');
 
 // login page
 router.get('/login',(req,res)=> res.render('login'))
@@ -82,5 +83,26 @@ router.post('/register',(req,res)=>{
     })
     }
 })
+
+router.post('/login',(req,res,next)=>{
+
+        passport.authenticate('local',{
+            successRedirect:'/dashboard',
+            failureRedirect:'/users/login',
+            failureFlash:true  
+     //error  au cas error  {message:' that email is not registred'} or {message: 'password incorrect'}
+
+        })(req,res,next);
+
+});
+//handel logout 
+router.get('/logout', function(req, res, next){
+    req.logout(function(err) {
+        if (err) { return next(err); }
+    });
+    req.flash('success_msg','You are logged out')
+    res.redirect('/users/login');
+});
+
 
 module.exports=router;

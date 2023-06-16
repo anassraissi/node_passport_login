@@ -26,3 +26,7 @@ bcrypt.genSalt(saltRounds, function(err, salt) {
 
 
 ![Alt text](image.png)
+
+# passport serialize and deserialaze
+
+![Alt text](image-1.png)

@@ -3,12 +3,17 @@ const expressLayouts=require('express-ejs-layouts');
 const app=express();
 const mongoose=require('mongoose');
 var flash = require('connect-flash');
-const session=require('express-session')
+const session=require('express-session');
+const passport = require('passport');
+
 
 const PORT=process.env.PORT || 5000
 
 //Db config
 const db=require('./config/keys').MongoURI;
+
+// passport config
+require('./config/Passport')(passport);
 
 //connect to Mongo
 
@@ -36,6 +41,10 @@ app.use(express.urlencoded({extended:false}));
       saveUninitialized: true
     }));
 
+    //passport middelware
+    app.use(passport.initialize())
+    app.use(passport.session())  
+
     // connect flash 
       app.use(flash())
       
@@ -44,6 +53,7 @@ app.use(express.urlencoded({extended:false}));
 
          res.locals.success_msg=req.flash('success_msg') 
          res.locals.error_msg=req.flash('error_msg')
+         res.locals.error=req.flash('error')  // error passport login
 
          next();
      }) 
